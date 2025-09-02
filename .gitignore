@@ -1,0 +1,46 @@
+# Build outputs
+**/target/
+**/build/
+**/*.o
+**/*.a
+**/*.so
+
+# Generated data files
+**/*.parquet
+**/*.csv
+**/runs/
+**/*.json
+
+# Python cache
+__pycache__/
+**/*.pyc
+**/*.pyo
+*.egg-info/
+
+# Rust
+Cargo.lock
+
+# C++ build artifacts
+CMakeCache.txt
+CMakeFiles/
+**/*.tar.gz
+third_party/eigen-*/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+/tmp/
+*.tmp
+*.bak
