@@ -1,36 +1,36 @@
-# BICEP → ENN-C++ → FusionAlpha Pipeline
+# BICEP-ENN-FusionAlpha Pipeline
 
-A complete research pipeline integrating three cutting-edge components for stochastic trajectory generation, entangled neural network learning, and committor-based planning.
+A pipeline for stochastic trajectory generation, sequence learning, and graph-based planning.
 
-## 🚀 **Overview**
+## Overview
 
-This pipeline demonstrates the complete integration of:
+Three-component system:
 
-- **BICEP**: Brownian-Inspired Computation Engine for Paths (Rust) - SDE trajectory generation
-- **ENN-C++**: Entangled Neural Networks (C++) - High-performance sequence learning with BPTT
-- **FusionAlpha**: Committor-based planning system (Rust/Python) - Graph reasoning with severity scaling
+- **BICEP**: Stochastic differential equation (SDE) trajectory generator (Rust)
+- **ENN-C++**: Entangled neural network implementation with backpropagation through time (C++)
+- **FusionAlpha**: Graph-based planning using committor functions (Rust/Python)
 
-## 📊 **Performance Results**
+## Critical Gaps and Limitations
 
-| Component | Input | Output | Performance |
-|-----------|-------|--------|-------------|
-| BICEP | Random seeds | 200 parity trajectories | <1s generation |
-| ENN-C++ | BICEP trajectories | Committor predictions | 45% → 85% accuracy |
-| FusionAlpha | ENN predictions | Planning decisions | 85% → 100% accuracy |
+- No standardized benchmarks or third-party validation
+- Missing unit tests for BICEP SDE integrators
+- No convergence tests for ENN training
+- FusionAlpha lacks proper graph algorithm verification
+- Performance metrics are from limited toy examples (parity task only)
+- No comparison with baseline methods (standard RNNs, LSTMs)
+- Memory usage and scaling properties undocumented
+- No error bars or confidence intervals on reported accuracies
 
-**Total Pipeline Runtime**: ~15 seconds  
-**Final Accuracy**: 100% on training data, ~49% on new sequences
-
-## 🏗️ **Architecture**
+## Architecture
 
 ```
 BICEP (Rust)     →     ENN-C++ (C++)     →     FusionAlpha (Rust/Python)
 ├─ SDE Integration     ├─ Entangled Cells      ├─ Graph Construction
-├─ Trajectory Gen      ├─ BPTT Training        ├─ Severity Scaling  
+├─ Trajectory Gen      ├─ BPTT Training        ├─ Severity Scaling
 └─ Parquet Output      └─ Committor Learning   └─ Decision Making
 ```
 
-## 🛠️ **Quick Start**
+## Quick Start
 
 ### Prerequisites
 - Rust (1.70+)
@@ -86,7 +86,7 @@ cd ../
 python3 pipeline_demo.py
 ```
 
-## 📁 **Repository Structure**
+## Repository Structure
 
 ```
 bicep-enn-fusion-clean/
@@ -109,58 +109,56 @@ bicep-enn-fusion-clean/
 └── FUSION_ALPHA_USAGE_GUIDE.md  # Detailed usage instructions
 ```
 
-## 🎯 **Key Features**
+## Implementation Details
 
 ### BICEP
-- **SDE Integration**: Euler-Maruyama, Heun, Milstein methods
-- **Parity Task**: Custom trajectory generator for binary sequences
-- **Parquet Output**: Efficient data serialization
+- SDE integrators: Euler-Maruyama, Heun, Milstein
+- Parity task trajectory generator
+- Parquet output format
 
 ### ENN-C++
-- **Entangled Cells**: ψₜ₊₁ = tanh(Wₓxₜ + Wₕhₜ + (E-λI)ψₜ + b)
-- **BPTT**: Full backpropagation through time
-- **OpenMP**: Parallel batch processing
-- **Validation**: Comprehensive gradient checks (1e-10 precision)
+- Entangled cell update: ψₜ₊₁ = tanh(Wₓxₜ + Wₕhₜ + (E-λI)ψₜ + b)
+- Backpropagation through time implementation
+- OpenMP parallel batch processing
+- Gradient checking (tolerance: 1e-10)
 
-### FusionAlpha  
-- **Committor Functions**: Transition probability learning
-- **Severity Scaling**: Confidence-weighted graph propagation
-- **Active Learning**: Online improvement with feedback
+### FusionAlpha
+- Committor function computation
+- Graph-based planning
+- Severity-weighted propagation
 
-## 📊 **Technical Specifications**
+## Technical Details
 
-| Metric | BICEP | ENN-C++ | FusionAlpha |
-|--------|-------|---------|-------------|
-| Build Time | 3s | 2s | <1s |
-| Memory Usage | ~50MB | ~100MB | ~20MB |
-| Parallelization | Single-threaded | OpenMP | Graph-parallel |
-| Data Format | Parquet | CSV/Memory | JSON |
+| Component | BICEP | ENN-C++ | FusionAlpha |
+|-----------|-------|---------|-------------|
+| Language | Rust | C++ | Rust/Python |
+| Parallelization | Single-threaded | OpenMP | Single-threaded |
+| Data Format | Parquet | CSV | JSON |
+| Dependencies | nalgebra, arrow | Eigen3 | nalgebra, serde |
 
-## 🔬 **Research Applications**
+## Potential Use Cases
 
-- **Molecular Dynamics**: Rare event prediction
-- **Financial Modeling**: Option pricing with uncertainty
-- **Reinforcement Learning**: Goal-conditioned planning
-- **Time Series**: Sequential decision making
+- Time series prediction with temporal dependencies
+- Stochastic process simulation
+- Sequential decision making
+- Graph-based planning problems
 
-## 📈 **Performance Notes**
+## Known Issues
 
-- Designed for research scale (200-1000 sequences)
-- Production scale requires HPC/A100 resources
-- Parity task difficulty scales as O(2^N) for N-bit sequences
-- Current implementation optimized for understanding over scale
+- Only tested on parity task (toy problem)
+- Limited to small sequence lengths (<100 steps)
+- No GPU support
+- Single-threaded bottlenecks in BICEP and FusionAlpha
+- Untested on real-world datasets
 
-## 🤝 **Contributing**
+## Requirements for Production Use
 
-This is a research demonstration pipeline. For production use:
-1. Scale BICEP to generate 100K+ trajectories
-2. Add GPU acceleration to ENN-C++
-3. Implement distributed FusionAlpha graph processing
+1. Comprehensive test suite needed
+2. Benchmarking against standard methods required
+3. GPU acceleration not implemented
+4. Distributed processing not supported
+5. Memory optimization needed for large-scale data
 
-## 📄 **License**
+## License
 
-Research and educational use. Components based on established mathematical foundations in stochastic processes, neural networks, and graph theory.
-
----
-
-**Built for high-performance scientific computing and research applications** 🚀
+Not specified. Research prototype only.
